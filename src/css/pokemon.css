@@ -1,0 +1,16 @@
+.pokemon {
+    width: 75px;
+    border: 1px solid #ccc;
+    background-color: white;
+    border-radius: 10%;
+    padding: .5em;
+    box-shadow: 7px 7px 5px -4px #ccc;
+    margin: 1em;
+    transition: transform 400ms ease;
+    cursor: pointer;
+}
+
+.flip {
+    transform: scale(1.1,1.1);
+    transform: rotate3d(0,1,0,180deg);
+}
