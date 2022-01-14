@@ -8,6 +8,7 @@ const initialGameState = {
     parFueSeleccionado: false,
     juego_ganado: false,
     juego_terminado: false,
+    fail: false,
     pokemons: PokemonsGenerator.build(),
     seleccionados: [],
     encontrados: [],

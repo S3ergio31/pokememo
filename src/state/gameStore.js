@@ -15,7 +15,7 @@ const getRonda = state => parFueSeleccionado(state) ? state.ronda + 1 : state.ro
 
 const juegoFueGanado = (state, action) => getEncontrados(state, action).length === state.pokemons.length / 2
 
-const juegoFueTerminado = (state, action) => juegoFueGanado(state, action);
+const juegoFueTerminado = (state, action) => juegoFueGanado(state, action) || state.fail;
 
 const getSeleccionados = state => parFueSeleccionado(state) ? [] : state.seleccionados;
     

@@ -19,6 +19,11 @@ const acciones = {
         ...state,
         seleccionados: [],
         incorrectos: []
+    }),
+
+    failGame: state => ({
+        ...state,
+        fail: true
     })
 };
 
