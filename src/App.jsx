@@ -3,11 +3,11 @@ import 'css/app.css';
 import Tablero from 'components/Tablero';
 import Header from 'components/Header';
 import Body from 'components/Body';
-import ModalMejoresPuntajes from 'components/ModalMejoresPuntajes';
+import MejoresPuntajes from 'components/MejoresPuntajes';
 
 const App = () => (
     <>
-        <ModalMejoresPuntajes />
+        <MejoresPuntajes />
         <Header />
         <Body>
             <Tablero />

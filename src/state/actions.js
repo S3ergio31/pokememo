@@ -1,33 +1,25 @@
 import PokemonsGenerator from "lib/PokemonsGenerator";
 import { initialGameState } from "./reducer";
 
-const seleccionarPokemon = (state, action) => {
-    return {
+const acciones = {
+    seleccionarPokemon: (state, action) => ({
         ...state,
         seleccionados: [
             ...state.seleccionados,
             action.payload
         ]
-    }
-};
+    }),
 
-const resetGame = () => ({
-    ...initialGameState,
-    pokemons: PokemonsGenerator.build()
-});
+    resetGame: () => ({
+        ...initialGameState,
+        pokemons: PokemonsGenerator.build()
+    }),
 
-const nuevaRonda = state => {
-    return {
+    nuevaRonda: state => ({
         ...state,
         seleccionados: [],
         incorrectos: []
-    }
-}
-
-const acciones = {
-    seleccionarPokemon,
-    resetGame,
-    nuevaRonda
+    })
 };
 
 export default acciones;

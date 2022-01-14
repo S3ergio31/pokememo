@@ -10,7 +10,8 @@ const puntajes = [
         puntos: 14
     }
 ];
-const ModalMejoresPuntajes = () => {
+
+const MejoresPuntajes = () => {
     const { juego_terminado } = useContext(GameContext);
     return (
         <Modal title="Mejores puntajes" show={juego_terminado}>
@@ -40,4 +41,4 @@ const ModalMejoresPuntajes = () => {
     );
 }
 
-export default ModalMejoresPuntajes;
+export default MejoresPuntajes;

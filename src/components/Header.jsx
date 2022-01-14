@@ -2,11 +2,15 @@ import React, { useContext } from 'react';
 import { GameContext } from 'context/GameProvider';
 import 'css/header.css';
 import logo from 'ico/logo.png';
+import Timer from './Timer';
 
 const Header = () => (
     <header className='header'>
         <img src={logo} alt="logo" />
-        Ronda: { useContext(GameContext).ronda }
+        <div>
+            Ronda: { useContext(GameContext).ronda }
+            <Timer />
+        </div>
     </header>
 );
 
