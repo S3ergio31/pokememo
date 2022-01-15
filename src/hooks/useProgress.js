@@ -9,16 +9,16 @@ const ONE_SECOND = 1;
 const useProgress = () => {
     const [progress, setProgress] = useState(0);
     const [elapseTime, setElapseTime] = useState(0);
-    const { failGame, juego_terminado } = useContext(GameContext);
+    const { failGame, game_over } = useContext(GameContext);
 
     useEffect(
         () => {
-            if(progress === MAX_PROGRESS && !juego_terminado){
+            if(progress === MAX_PROGRESS && !game_over){
                 setElapseTime(0);
                 failGame();
             }
         }, 
-        [failGame, progress, juego_terminado] 
+        [failGame, progress, game_over] 
     );
 
     useEffect(
@@ -30,12 +30,12 @@ const useProgress = () => {
         const incrementElapseTime = () => setElapseTime(actualElapseTime => actualElapseTime + ONE_SECOND);
         const timer = setInterval(incrementElapseTime, PER_SECOND);
         const stop = () => clearInterval(timer);
-        if(juego_terminado) {
+        if(game_over) {
             stop();
             setElapseTime(0);
         }
         return stop;
-    }, [juego_terminado]);
+    }, [game_over]);
 
     return progress;
 }
