@@ -25,7 +25,6 @@ const MejoresPuntajes = () => {
                         <th>Posición</th>
                         <th>Jugador</th>
                         <th>Rondas</th>
-                        <th>Puntos</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -35,7 +34,6 @@ const MejoresPuntajes = () => {
                                 <td style={{ textAlign: 'center' }}>{ index + 1 }</td>
                                 <td style={{ textAlign: 'center' }}>{ puntaje.jugador }</td>
                                 <td style={{ textAlign: 'center' }}>{ puntaje.rondas }</td>
-                                <td style={{ textAlign: 'center' }}>{ puntaje.puntos }</td>
                             </tr>
                         )
                     }

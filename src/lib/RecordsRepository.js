@@ -1,9 +1,8 @@
 const RECORDS = "records";
 
 class Record {
-    constructor(rondas, puntos){
+    constructor(rondas){
         this.rondas = rondas;
-        this.puntos = puntos;
     }
 }
 
@@ -15,24 +14,22 @@ class RecordsRepository {
     
     get records(){
         if(!this._cache){
-            this._cache = this.getFromStorage().sort(this.orderByPonderation);
+            this._cache = this.getFromStorage().sort(this.orderByRound);
         }
         return this._cache;
     }
     
     getFromStorage = () => JSON.parse(this.storage.getItem(RECORDS)) || [];
 
-    orderByPonderation = (puntajeA, puntajeB) => {
-        if(this.calculatePonderation(puntajeA) > this.calculatePonderation(puntajeB)) {
+    orderByRound = (puntajeA, puntajeB) => {
+        if(puntajeA.rondas > puntajeB.rondas) {
             return 1;
         }
-        if(this.calculatePonderation(puntajeA) < this.calculatePonderation(puntajeB)) {
+        if(puntajeA.rondas < puntajeB.rondas) {
             return -1;
         }
         return 0;
     }
-
-    calculatePonderation = puntaje => puntaje.rondas / puntaje.puntos;
 
     save = ({record, jugador}) => {
         this.checkRecordType(record);
@@ -66,13 +63,13 @@ class RecordsRepository {
     }
 
     get last(){
-        return this.records[this.count - 1] ?? { rondas:0, puntos: 0 };
+        return this.records[this.count - 1] ?? { rondas:0 };
     }
 
-    createRecord = ({rondas, puntos}) => {
-        const isBetter = rondas < this.last.rondas && puntos >= this.last.puntos;
+    createRecord = rondas => {
+        const isBetter = rondas < this.last.rondas;
         if(!this.full || isBetter){
-            return new Record(rondas, puntos);
+            return new Record(rondas);
         }
         throw new Error("Cannot create Record");
     }

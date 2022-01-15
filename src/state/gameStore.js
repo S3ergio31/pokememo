@@ -48,10 +48,7 @@ const calcularNuevoRecord = state => {
     };
 
     try {
-        return RecordsRepository.createRecord({
-            rondas: state.ronda, 
-            puntos: state.encontrados.length
-        });
+        return RecordsRepository.createRecord(state.ronda);
     }
     catch(error){
         return null;
