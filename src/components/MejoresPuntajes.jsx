@@ -1,37 +1,41 @@
 import { GameContext } from 'context/GameProvider';
 import React, { useContext } from 'react';
 import Modal from './Modal';
-
-const puntajes = [
-    {
-        posicion: 1,
-        jugador: "Sergio",
-        rondas: 25,
-        puntos: 14
-    }
-];
+import NuevoRecord from './NuevoRecord';
 
 const MejoresPuntajes = () => {
-    const { juego_terminado } = useContext(GameContext);
+    const { 
+        game_over, 
+        records, 
+        resetGame, 
+        win, 
+        new_record_saved,
+        new_record
+    } = useContext(GameContext);
+
+    if(!new_record_saved && win && new_record){
+        return <NuevoRecord />
+    }
+
     return (
-        <Modal title="Mejores puntajes" show={juego_terminado}>
-            <table style={{margin: 'auto'}}>
+        <Modal title="Mejores puntajes" show={game_over} onAceptar={resetGame}>
+            <table style={{margin: 'auto'}} cellSpacing="10">
                 <thead>
                     <tr>
                         <th>Posición</th>
                         <th>Jugador</th>
                         <th>Rondas</th>
-                        <th>Puntaje</th>
+                        <th>Puntos</th>
                     </tr>
                 </thead>
                 <tbody>
                     {
-                        puntajes.map(puntaje =>               
-                            <tr key={puntaje.jugador}>
-                                <td>{ puntaje.posicion }</td>
-                                <td>{ puntaje.jugador }</td>
-                                <td>{ puntaje.rondas }</td>
-                                <td>{ puntaje.puntos }</td>
+                        records.map((puntaje, index) =>               
+                            <tr key={index}>
+                                <td style={{ textAlign: 'center' }}>{ index + 1 }</td>
+                                <td style={{ textAlign: 'center' }}>{ puntaje.jugador }</td>
+                                <td style={{ textAlign: 'center' }}>{ puntaje.rondas }</td>
+                                <td style={{ textAlign: 'center' }}>{ puntaje.puntos }</td>
                             </tr>
                         )
                     }

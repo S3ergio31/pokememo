@@ -6,8 +6,11 @@ import actions from "state/actions";
 const initialGameState = {
     ronda: 0,
     parFueSeleccionado: false,
-    juego_ganado: false,
-    juego_terminado: false,
+    win: false,
+    game_over: false,
+    new_record_saved: false,
+    new_record: null,
+    records: [],
     fail: false,
     pokemons: PokemonsGenerator.build(),
     seleccionados: [],

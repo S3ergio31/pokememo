@@ -1,20 +1,18 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import Boton from './Boton';
 import 'css/modal.css';
-import { GameContext } from 'context/GameProvider';
 
 const Modal = ({
     children, 
     show,
-    title
+    title,
+    onAceptar = () => {}
 }) => {
     const [visible, setVisible] = useState(show);
-
-    const { resetGame } = useContext(GameContext);
     
     const close = () => {
-        resetGame();
+        onAceptar();
         setVisible(false);
     }
 
