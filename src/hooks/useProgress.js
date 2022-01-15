@@ -1,7 +1,7 @@
 import { GameContext } from 'context/GameProvider';
 import { useContext, useEffect, useState } from 'react';
 
-const SECONDS_TO_GAME_OVER = 10;
+const SECONDS_TO_GAME_OVER = 60;
 const PER_SECOND = 1000;
 const MAX_PROGRESS = 100;
 const ONE_SECOND = 1;

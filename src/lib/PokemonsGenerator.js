@@ -1,7 +1,6 @@
 import Pokemon from "./Pokemon";
 
-//const MAX_POKEMONS_TO_GENERATE = 26;
-const MAX_POKEMONS_TO_GENERATE = 3;
+const MAX_POKEMONS_TO_GENERATE = 11;
 let key = 0;
 
 class PokemonsGenerator {
