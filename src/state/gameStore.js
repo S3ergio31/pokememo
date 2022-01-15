@@ -1,3 +1,5 @@
+import RecordsRepository from "lib/RecordsRepository";
+
 const buildState = (state, action) => ({
     ...state,
     ronda: getRonda(state),
@@ -8,7 +10,7 @@ const buildState = (state, action) => ({
     incorrectos: getIncorrectos(state, action),
     parFueSeleccionado: parFueSeleccionado(state),
     new_record: calcularNuevoRecord(state),
-    records: getRecords(state)
+    records: RecordsRepository.records
 });
 
 const parFueSeleccionado = state => state.seleccionados.length === 2;
@@ -41,41 +43,19 @@ const getIncorrectos = (state, action) => {
 }
 
 const calcularNuevoRecord = state => {
-    const lader = JSON.parse(localStorage.getItem("records")) || [];
     if(!state.ronda || !state.encontrados.length || state.new_record_saved) {
         return null;
     };
-    if(lader.length === 10){
-        const last = lader[lader.length - 1];
-        if(state.ronda <= last.rondas && state.encontrados.length >= last.puntos){
-            return {
-                jugador: "",
-                rondas: state.ronda,
-                puntos: state.encontrados.length
-            }
-        }
+
+    try {
+        return RecordsRepository.createRecord({
+            rondas: state.ronda, 
+            puntos: state.encontrados.length
+        });
+    }
+    catch(error){
         return null;
     }
-    return {
-        jugador: "",
-        rondas: state.ronda,
-        puntos: state.encontrados.length
-    }
-}
-
-const getRecords = () => {
-    const lader = JSON.parse(localStorage.getItem("records")) || [];
-    const ponderation = puntaje => puntaje.rondas / puntaje.puntos;
-    const order = (puntajeA, puntajeB) => {
-        if(ponderation(puntajeA) > ponderation(puntajeB)) {
-            return 1;
-        }
-        if(ponderation(puntajeA) < ponderation(puntajeB)) {
-            return -1;
-        }
-        return 0;
-    }
-    return lader.sort(order);
 }
 
 export default buildState;
