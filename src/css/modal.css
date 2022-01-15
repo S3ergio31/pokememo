@@ -17,6 +17,12 @@
     width: 50%;
 }
 
+@media(max-width: 720px){
+    .modal-dialog {
+        width: 90%;
+    }
+}
+
 .modal-header {
     display: flex;
     justify-content: space-between;
