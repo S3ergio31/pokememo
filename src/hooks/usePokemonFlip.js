@@ -38,11 +38,11 @@ const usePokemonFlip = pokemon => {
             const timer = setTimeout(
                 () => {
                     setVisible(false);
-                    nuevaRonda()
+                    nuevaRonda();
                 },
-                1000
+                600
             );
-            return () => clearTimeout(timer);
+            return () => !visible && clearTimeout(timer);
         }
     }
 
