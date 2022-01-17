@@ -1,3 +1,5 @@
+import getPokemonIcon from './PokemonAssets';
+
 class Pokemon {
     constructor(pokemonNumber){
         this._pokemonNumber = pokemonNumber;
@@ -12,7 +14,7 @@ class Pokemon {
     }
 
     get image(){
-        return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${this._pokemonNumber}.png`;
+        return getPokemonIcon(this._pokemonNumber);
     }
 
     get name() {
