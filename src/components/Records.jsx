@@ -1,9 +1,9 @@
 import { GameContext } from 'context/GameProvider';
 import React, { useContext } from 'react';
 import Modal from './Modal';
-import NuevoRecord from './NuevoRecord';
+import NewRecord from './NewRecord';
 
-const MejoresPuntajes = () => {
+const Records = () => {
     const { 
         game_over, 
         records, 
@@ -14,17 +14,17 @@ const MejoresPuntajes = () => {
     } = useContext(GameContext);
 
     if(!new_record_saved && win && new_record){
-        return <NuevoRecord />
+        return <NewRecord />
     }
 
     return (
-        <Modal title="Mejores puntajes" show={game_over} onAceptar={resetGame}>
+        <Modal title="Best records" show={game_over} onAccept={resetGame}>
             <table style={{margin: 'auto'}} cellSpacing="10">
                 <thead>
                     <tr>
-                        <th>Posición</th>
-                        <th>Jugador</th>
-                        <th>Rondas</th>
+                        <th>Position</th>
+                        <th>Player</th>
+                        <th>Rounds</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -32,8 +32,8 @@ const MejoresPuntajes = () => {
                         records.map((puntaje, index) =>               
                             <tr key={index}>
                                 <td style={{ textAlign: 'center' }}>{ index + 1 }</td>
-                                <td style={{ textAlign: 'center' }}>{ puntaje.jugador }</td>
-                                <td style={{ textAlign: 'center' }}>{ puntaje.rondas }</td>
+                                <td style={{ textAlign: 'center' }}>{ puntaje.player }</td>
+                                <td style={{ textAlign: 'center' }}>{ puntaje.rounds }</td>
                             </tr>
                         )
                     }
@@ -43,4 +43,4 @@ const MejoresPuntajes = () => {
     );
 }
 
-export default MejoresPuntajes;
+export default Records;

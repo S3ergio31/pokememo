@@ -2,11 +2,11 @@ import PokemonsGenerator from "lib/PokemonsGenerator";
 import { initialGameState } from "./reducer";
 import RecordsRepository from "lib/RecordsRepository";
 
-const acciones = {
-    seleccionarPokemon: (state, action) => ({
+const actions = {
+    selectPokemon: (state, action) => ({
         ...state,
-        seleccionados: [
-            ...state.seleccionados,
+        selected_pokemons: [
+            ...state.selected_pokemons,
             action.payload
         ]
     }),
@@ -16,10 +16,10 @@ const acciones = {
         pokemons: PokemonsGenerator.build()
     }),
 
-    nuevaRonda: state => ({
+    newRound: state => ({
         ...state,
-        seleccionados: [],
-        incorrectos: []
+        selected_pokemons: [],
+        incorrects: []
     }),
 
     failGame: state => ({
@@ -32,9 +32,9 @@ const acciones = {
         new_record: null,
         new_record_saved: RecordsRepository.save({
             record: state.new_record, 
-            jugador: action.payload
+            player: action.payload
         })
     })
 };
 
-export default acciones;
+export default actions;

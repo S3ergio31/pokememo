@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
-import Boton from './Boton';
+import Button from './Button';
 import 'css/modal.css';
 
 const Modal = ({
     children, 
     show,
     title,
-    onAceptar = () => {}
+    onAccept = () => {}
 }) => {
     const [visible, setVisible] = useState(show);
     
     const close = () => {
-        onAceptar();
+        onAccept();
         setVisible(false);
     }
 
@@ -33,9 +33,9 @@ const Modal = ({
                     { children }
                 </section>
                 <footer className='modal-footer'>
-                    <Boton onClick={close}>
-                        Aceptar
-                    </Boton>
+                    <Button onClick={close}>
+                        Accept
+                    </Button>
                 </footer>
             </div>
         </div>,

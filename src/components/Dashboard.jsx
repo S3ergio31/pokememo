@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import Pokemon from 'components/Pokemon';
 import { GameContext } from 'context/GameProvider';
 
-const Tablero = () => (
+const Dashboard = () => (
     useContext(GameContext).pokemons.map( 
         pokemon => 
         <Pokemon 
@@ -12,4 +12,4 @@ const Tablero = () => (
     )
 );
 
-export default Tablero;
+export default Dashboard;

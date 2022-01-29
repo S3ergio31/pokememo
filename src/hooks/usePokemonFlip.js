@@ -5,40 +5,40 @@ import pokeball from 'ico/pokeball.png';
 const existPokemonIn = (pokemons, pokemon) => pokemons.some(p => p.equals(pokemon));
 
 const usePokemonFlip = pokemon => {
-    const [encontrado, setEncontrado] = useState(false);
+    const [found, setFound] = useState(false);
     const [visible, setVisible] = useState(false);
 
     const { 
-        encontrados,
-        incorrectos,
-        seleccionarPokemon,
-        parFueSeleccionado,
-        nuevaRonda
+        found_pokemons,
+        incorrects,
+        selectPokemon,
+        pair_has_been_selected,
+        newRound
     } = useContext(GameContext);
 
     const handleFlip = () => {
-        const canFlip = !encontrado && !visible && !parFueSeleccionado;
+        const canFlip = !found && !visible && !pair_has_been_selected;
         if(canFlip){
             setVisible(visible => !visible);
-            seleccionarPokemon(pokemon);
+            selectPokemon(pokemon);
         }
     }
 
-    const marcarEncontrado = () => {
-        const parEsCorrecto = !encontrado && visible && existPokemonIn(encontrados, pokemon);
-        if(parEsCorrecto){
-            setEncontrado(true);
-            nuevaRonda();
+    const markFound = () => {
+        const pairIsCorrect = !found && visible && existPokemonIn(found_pokemons, pokemon);
+        if(pairIsCorrect){
+            setFound(true);
+            newRound();
         }
     }
 
-    const esconderIncorrectos = () => {
-        const parEsIncorrecto = !encontrado && visible && existPokemonIn(incorrectos, pokemon);
-        if(parEsIncorrecto){
+    const hideIncorrect = () => {
+        const pairIsIncorrect = !found && visible && existPokemonIn(incorrects, pokemon);
+        if(pairIsIncorrect){
             const timer = setTimeout(
                 () => {
                     setVisible(false);
-                    nuevaRonda();
+                    newRound();
                 },
                 600
             );
@@ -47,18 +47,18 @@ const usePokemonFlip = pokemon => {
     }
 
     useEffect(
-        marcarEncontrado, 
-        [encontrado, nuevaRonda, visible, pokemon, encontrados]
+        markFound, 
+        [found, newRound, visible, pokemon, found_pokemons]
     );
 
     useEffect(
-        esconderIncorrectos, 
-        [encontrado, nuevaRonda, visible, pokemon, incorrectos]
+        hideIncorrect, 
+        [found, newRound, visible, pokemon, incorrects]
     );
 
     return {
         flip: `pokemon ${visible ? 'flip' : ''}`,
-        image: visible || encontrado ? pokemon.image : pokeball,
+        image: visible || found ? pokemon.image : pokeball,
         handleFlip
     }
 }

@@ -1,17 +1,17 @@
 import React from 'react';
 import 'css/app.css';
-import Tablero from 'components/Tablero';
+import Dashboard from 'components/Dashboard';
 import Header from 'components/Header';
 import Body from 'components/Body';
-import MejoresPuntajes from 'components/MejoresPuntajes';
+import Records from 'components/Records';
 import GameProvider from 'context/GameProvider';
 
 const App = () => (
     <GameProvider>
-        <MejoresPuntajes />
+        <Records />
         <Header />
         <Body>
-            <Tablero />
+            <Dashboard />
         </Body>
     </GameProvider>
 );

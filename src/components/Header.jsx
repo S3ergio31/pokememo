@@ -8,7 +8,7 @@ const Header = () => (
     <header className='header'>
         <img src={logo} alt="logo" />
         <div>
-            Ronda: { useContext(GameContext).ronda }
+            Round: { useContext(GameContext).round }
             <Timer />
         </div>
     </header>

@@ -1,8 +1,8 @@
 const RECORDS = "records";
 
 class Record {
-    constructor(rondas){
-        this.rondas = rondas;
+    constructor(rounds){
+        this.rounds = rounds;
     }
 }
 
@@ -21,20 +21,20 @@ class RecordsRepository {
     
     getFromStorage = () => JSON.parse(this.storage.getItem(RECORDS)) || [];
 
-    orderByRound = (puntajeA, puntajeB) => {
-        if(puntajeA.rondas > puntajeB.rondas) {
+    orderByRound = (scoreA, scoreB) => {
+        if(scoreA.rounds > scoreB.rounds) {
             return 1;
         }
-        if(puntajeA.rondas < puntajeB.rondas) {
+        if(scoreA.rounds < scoreB.rounds) {
             return -1;
         }
         return 0;
     }
 
-    save = ({record, jugador}) => {
+    save = ({record, player}) => {
         this.checkRecordType(record);
         this.removeLastIfFull();
-        this.saveInStorage(record, jugador);
+        this.saveInStorage(record, player);
         return true;
     }
 
@@ -46,10 +46,10 @@ class RecordsRepository {
 
     removeLastIfFull = () => this.full && this.records.pop();
 
-    saveInStorage = (record, jugador) => {
+    saveInStorage = (record, player) => {
         this.storage.setItem(
             RECORDS, 
-            JSON.stringify([...this.records, {...record, jugador}])
+            JSON.stringify([...this.records, {...record, player}])
         );
         this._cache = null;
     }
@@ -63,15 +63,15 @@ class RecordsRepository {
     }
 
     get last(){
-        return this.records[this.count - 1] ?? { rondas:0 };
+        return this.records[this.count - 1] ?? { rounds:0 };
     }
 
-    createRecord = rondas => {
-        const isBetter = rondas < this.last.rondas;
+    createRecord = rounds => {
+        const isBetter = rounds < this.last.rounds;
         if(!this.full || isBetter){
-            return new Record(rondas);
+            return new Record(rounds);
         }
-        throw new Error("Cannot create Record");
+        return null;
     }
 
     get storage(){

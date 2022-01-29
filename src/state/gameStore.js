@@ -2,57 +2,52 @@ import RecordsRepository from "lib/RecordsRepository";
 
 const buildState = (state, action) => ({
     ...state,
-    ronda: getRonda(state),
+    round: getRound(state),
     win: isWin(state, action),
     game_over: isGameOver(state, action),
-    seleccionados: getSeleccionados(state),
-    encontrados: getEncontrados(state, action),
-    incorrectos: getIncorrectos(state, action),
-    parFueSeleccionado: parFueSeleccionado(state),
-    new_record: calcularNuevoRecord(state),
+    selected_pokemons: getSelectedPokemons(state),
+    found_pokemons: getFoundPokemons(state, action),
+    incorrects: getIncorrects(state, action),
+    pair_has_been_selected: pairHasBeenSelected(state),
+    new_record: calculateNewRecord(state),
     records: RecordsRepository.records
 });
 
-const parFueSeleccionado = state => state.seleccionados.length === 2;
+const pairHasBeenSelected = state => state.selected_pokemons.length === 2;
 
-const getRonda = state => parFueSeleccionado(state) ? state.ronda + 1 : state.ronda;
+const getRound = state => pairHasBeenSelected(state) ? state.round + 1 : state.round;
 
-const isWin = (state, action) => getEncontrados(state, action).length === state.pokemons.length / 2
+const isWin = (state, action) => getFoundPokemons(state, action).length === state.pokemons.length / 2
 
 const isGameOver = state => state.win || state.fail;
 
-const getSeleccionados = state => parFueSeleccionado(state) ? [] : state.seleccionados;
+const getSelectedPokemons = state => pairHasBeenSelected(state) ? [] : state.selected_pokemons;
     
-const getEncontrados = (state, action) => {
-    const coincideConLosSeleccionados = state.seleccionados.every(p => p.equals(action.payload));
-    if(parFueSeleccionado(state) && coincideConLosSeleccionados){
-        return [...state.encontrados, action.payload];
+const getFoundPokemons = (state, action) => {
+    const matchWithSelectedPokemons = state.selected_pokemons.every(p => p.equals(action.payload));
+    if(pairHasBeenSelected(state) && matchWithSelectedPokemons){
+        return [...state.found_pokemons, action.payload];
     }
-    return [...state.encontrados];
+    return [...state.found_pokemons];
 }
 
-const getIncorrectos = (state, action) => {
-    const noCoincideConAlgunoSeleccionado = state.seleccionados.some(p => !p.equals(action.payload));
-    if(!parFueSeleccionado(state)){
+const getIncorrects = (state, action) => {
+    const noMatchSomeSelected = state.selected_pokemons.some(p => !p.equals(action.payload));
+    if(!pairHasBeenSelected(state)){
         return [];
     }
-    if(parFueSeleccionado(state) && noCoincideConAlgunoSeleccionado){
-        return [...state.seleccionados];
+    if(pairHasBeenSelected(state) && noMatchSomeSelected){
+        return [...state.selected_pokemons];
     }
-    return [...state.incorrectos]
+    return [...state.incorrects]
 }
 
-const calcularNuevoRecord = state => {
-    if(!state.ronda || !state.encontrados.length || state.new_record_saved) {
+const calculateNewRecord = state => {
+    if(!state.round || !state.found_pokemons.length || state.new_record_saved) {
         return null;
     };
+    return RecordsRepository.createRecord(state.round);
 
-    try {
-        return RecordsRepository.createRecord(state.ronda);
-    }
-    catch(error){
-        return null;
-    }
 }
 
 export default buildState;
