@@ -1,4 +1,4 @@
-jest.mock('lib/PokemonAssets', () => id => `pokemon_${id}.png`);
+vi.mock('lib/PokemonAssets', () => ({ default: id => `pokemon_${id}.png` }));
 
 import PokemonsGenerator from 'lib/PokemonsGenerator';
 import Pokemon from 'lib/Pokemon';

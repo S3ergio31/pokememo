@@ -1,9 +1,9 @@
-const pokemonIcons = require.context('ico/pokemons');
+// import.meta.glob replaces CRA's webpack require.context
+const pokemonIcons = import.meta.glob('../ico/pokemons/*.png', { eager: true });
 
 const getPokemonIcon = id => {
-    const resource_key = `./${id}.png`;
-    const module = pokemonIcons(resource_key);
-    return module.default;
+    const key = `../ico/pokemons/${id}.png`;
+    return pokemonIcons[key]?.default;
 }
 
 export default getPokemonIcon;

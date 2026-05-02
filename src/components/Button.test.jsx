@@ -9,7 +9,7 @@ describe('Button', () => {
     });
 
     it('calls onClick when clicked', () => {
-        const onClick = jest.fn();
+        const onClick = vi.fn();
         render(<Button onClick={onClick}>Click me</Button>);
         fireEvent.click(screen.getByRole('button'));
         expect(onClick).toHaveBeenCalledTimes(1);

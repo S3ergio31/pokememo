@@ -1,11 +1,13 @@
-// Mocks must be set up before any imports so Jest hoisting works correctly
+// vi.mock calls are hoisted before imports by Vitest — same behaviour as Jest.
 // PokemonsGenerator must NOT be mocked — initialGameState needs a real non-empty deck
 // so isWin (found / total*0.5) doesn't trivially return true on an empty board.
-jest.mock('lib/PokemonAssets', () => id => `pokemon_${id}.png`);
-jest.mock('lib/RecordsRepository', () => ({
-    records: [],
-    createRecord: jest.fn(() => null),
-    save: jest.fn(() => true),
+vi.mock('lib/PokemonAssets', () => ({ default: id => `pokemon_${id}.png` }));
+vi.mock('lib/RecordsRepository', () => ({
+    default: {
+        records: [],
+        createRecord: vi.fn(() => null),
+        save: vi.fn(() => true),
+    },
 }));
 
 import { gameReducer, initialGameState } from 'state/reducer';

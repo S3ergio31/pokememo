@@ -1,7 +1,5 @@
-jest.mock('lib/PokemonAssets', () => id => `pokemon_${id}.png`);
-
-// pokeball.png is transformed by CRA's file transformer to return its basename
-jest.mock('ico/pokeball.png', () => 'pokeball.png');
+vi.mock('lib/PokemonAssets', () => ({ default: id => `pokemon_${id}.png` }));
+vi.mock('ico/pokeball.png', () => ({ default: 'pokeball.png' }));
 
 import React from 'react';
 import { render, fireEvent, act } from '@testing-library/react';
@@ -9,7 +7,6 @@ import { GameContext } from 'context/GameProvider';
 import usePokemonFlip from 'hooks/usePokemonFlip';
 import Pokemon from 'lib/Pokemon';
 
-// Renders a card component backed by the hook
 function FlipCard({ pokemon }) {
     const { flip, image, handleFlip } = usePokemonFlip(pokemon);
     return (
@@ -20,8 +17,8 @@ function FlipCard({ pokemon }) {
 }
 
 const makeContext = (overrides = {}) => ({
-    selectPokemon: jest.fn(),
-    newRound: jest.fn(),
+    selectPokemon: vi.fn(),
+    newRound: vi.fn(),
     found_pokemons: [],
     incorrects: [],
     pair_has_been_selected: false,
@@ -89,10 +86,8 @@ describe('usePokemonFlip', () => {
             const ctx = makeContext();
             const { getByTestId, rerender } = renderCard(pokemon, ctx);
 
-            // Flip the card first so it becomes visible
             fireEvent.click(getByTestId('card'));
 
-            // Context now reports that this pokemon is a found pair
             rerender(
                 <GameContext.Provider value={{ ...ctx, found_pokemons: [pokemon] }}>
                     <FlipCard pokemon={pokemon} />
@@ -100,7 +95,6 @@ describe('usePokemonFlip', () => {
             );
 
             expect(ctx.newRound).toHaveBeenCalled();
-            // Image stays as pokemon (not pokeball) even after being "found"
             expect(getByTestId('img').src).toContain('pokemon_1.png');
         });
 
@@ -123,8 +117,8 @@ describe('usePokemonFlip', () => {
     });
 
     describe('when in incorrects', () => {
-        beforeEach(() => jest.useFakeTimers());
-        afterEach(() => jest.useRealTimers());
+        beforeEach(() => vi.useFakeTimers());
+        afterEach(() => vi.useRealTimers());
 
         it('hides the card after 600ms and calls newRound', () => {
             const ctx = makeContext();
@@ -139,7 +133,7 @@ describe('usePokemonFlip', () => {
                 </GameContext.Provider>
             );
 
-            act(() => { jest.advanceTimersByTime(600); });
+            act(() => { vi.advanceTimersByTime(600); });
 
             expect(getByTestId('card').className).not.toContain('flip');
             expect(getByTestId('img').src).toContain('pokeball.png');

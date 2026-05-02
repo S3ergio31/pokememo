@@ -1,11 +1,10 @@
-jest.mock('lib/PokemonAssets', () => id => `pokemon_${id}.png`);
+vi.mock('lib/PokemonAssets', () => ({ default: id => `pokemon_${id}.png` }));
 
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { GameContext } from 'context/GameProvider';
 import Records from 'components/Records';
 
-// Records renders Modal (and possibly NewRecord) which portal to #root
 let root;
 beforeEach(() => {
     root = document.createElement('div');
@@ -18,10 +17,10 @@ const makeCtx = (overrides = {}) => ({
     game_over: false,
     win: false,
     records: [],
-    resetGame: jest.fn(),
+    resetGame: vi.fn(),
     new_record: null,
     new_record_saved: false,
-    addRecord: jest.fn(), // consumed by NewRecord when rendered
+    addRecord: vi.fn(),
     ...overrides,
 });
 
@@ -58,7 +57,6 @@ describe('Records', () => {
         expect(screen.getByText('Bob')).toBeInTheDocument();
         expect(screen.getByText('3')).toBeInTheDocument();
         expect(screen.getByText('7')).toBeInTheDocument();
-        // Positions
         expect(screen.getByText('1')).toBeInTheDocument();
         expect(screen.getByText('2')).toBeInTheDocument();
     });

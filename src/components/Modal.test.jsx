@@ -41,7 +41,7 @@ describe('Modal', () => {
 
     describe('closing', () => {
         it('calls onAccept and hides the modal when the X button is clicked', () => {
-            const onAccept = jest.fn();
+            const onAccept = vi.fn();
             render(<Modal show={true} title="Close me" onAccept={onAccept} />);
 
             fireEvent.click(screen.getByText('X'));
@@ -51,7 +51,7 @@ describe('Modal', () => {
         });
 
         it('calls onAccept and hides the modal when the Accept button is clicked', () => {
-            const onAccept = jest.fn();
+            const onAccept = vi.fn();
             render(<Modal show={true} title="Accept me" onAccept={onAccept} />);
 
             fireEvent.click(screen.getByText('Accept'));

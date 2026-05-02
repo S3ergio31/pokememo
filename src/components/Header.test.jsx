@@ -1,5 +1,5 @@
-jest.mock('lib/PokemonAssets', () => id => `pokemon_${id}.png`);
-jest.mock('ico/logo.png', () => 'logo.png');
+vi.mock('lib/PokemonAssets', () => ({ default: id => `pokemon_${id}.png` }));
+vi.mock('ico/logo.png', () => ({ default: 'logo.png' }));
 
 import React from 'react';
 import { render, screen } from '@testing-library/react';
@@ -8,12 +8,12 @@ import Header from 'components/Header';
 
 const makeCtx = (round = 0) => ({
     round,
-    failGame: jest.fn(),
+    failGame: vi.fn(),
     game_over: false,
 });
 
-beforeEach(() => jest.useFakeTimers());
-afterEach(() => jest.useRealTimers());
+beforeEach(() => vi.useFakeTimers());
+afterEach(() => vi.useRealTimers());
 
 describe('Header', () => {
     it('renders the logo image', () => {

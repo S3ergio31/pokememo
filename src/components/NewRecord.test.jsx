@@ -1,11 +1,10 @@
-jest.mock('lib/PokemonAssets', () => id => `pokemon_${id}.png`);
+vi.mock('lib/PokemonAssets', () => ({ default: id => `pokemon_${id}.png` }));
 
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { GameContext } from 'context/GameProvider';
 import NewRecord from 'components/NewRecord';
 
-// NewRecord renders Modal which portals to #root
 let root;
 beforeEach(() => {
     root = document.createElement('div');
@@ -14,7 +13,7 @@ beforeEach(() => {
 });
 afterEach(() => root.remove());
 
-const makeCtx = () => ({ addRecord: jest.fn() });
+const makeCtx = () => ({ addRecord: vi.fn() });
 
 function renderNewRecord(ctx = makeCtx()) {
     return { ctx, ...render(

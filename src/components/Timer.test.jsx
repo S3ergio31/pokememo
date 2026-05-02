@@ -1,5 +1,4 @@
-// Timer uses useProgress which reads GameContext (failGame, game_over)
-jest.mock('lib/PokemonAssets', () => id => `pokemon_${id}.png`);
+vi.mock('lib/PokemonAssets', () => ({ default: id => `pokemon_${id}.png` }));
 
 import React from 'react';
 import { render, act } from '@testing-library/react';
@@ -7,7 +6,7 @@ import { GameContext } from 'context/GameProvider';
 import Timer from 'components/Timer';
 
 const makeCtx = (overrides = {}) => ({
-    failGame: jest.fn(),
+    failGame: vi.fn(),
     game_over: false,
     ...overrides,
 });
@@ -20,8 +19,8 @@ function renderTimer(ctx = makeCtx()) {
     );
 }
 
-beforeEach(() => jest.useFakeTimers());
-afterEach(() => jest.useRealTimers());
+beforeEach(() => vi.useFakeTimers());
+afterEach(() => vi.useRealTimers());
 
 describe('Timer', () => {
     it('renders the progress bar container', () => {
@@ -36,7 +35,7 @@ describe('Timer', () => {
 
     it('advances the bar to 50% after 30 seconds', () => {
         const { container } = renderTimer();
-        act(() => { jest.advanceTimersByTime(30 * 1000); });
+        act(() => { vi.advanceTimersByTime(30 * 1000); });
         expect(container.querySelector('.progress-bar')).toHaveStyle('width: 50%');
     });
 
@@ -44,7 +43,7 @@ describe('Timer', () => {
         const ctx = makeCtx();
         const { container, rerender } = renderTimer(ctx);
 
-        act(() => { jest.advanceTimersByTime(20 * 1000); });
+        act(() => { vi.advanceTimersByTime(20 * 1000); });
 
         rerender(
             <GameContext.Provider value={{ ...ctx, game_over: true }}>
@@ -53,7 +52,7 @@ describe('Timer', () => {
         );
 
         const widthAfterStop = container.querySelector('.progress-bar').style.width;
-        act(() => { jest.advanceTimersByTime(30 * 1000); });
+        act(() => { vi.advanceTimersByTime(30 * 1000); });
 
         expect(container.querySelector('.progress-bar').style.width).toBe(widthAfterStop);
     });

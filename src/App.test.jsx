@@ -1,6 +1,6 @@
-jest.mock('lib/PokemonAssets', () => id => `pokemon_${id}.png`);
-jest.mock('ico/pokeball.png', () => 'pokeball.png');
-jest.mock('ico/logo.png', () => 'logo.png');
+vi.mock('lib/PokemonAssets', () => ({ default: id => `pokemon_${id}.png` }));
+vi.mock('ico/pokeball.png', () => ({ default: 'pokeball.png' }));
+vi.mock('ico/logo.png', () => ({ default: 'logo.png' }));
 
 import React from 'react';
 import { render, screen } from '@testing-library/react';

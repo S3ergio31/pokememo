@@ -1,5 +1,5 @@
-jest.mock('lib/PokemonAssets', () => id => `pokemon_${id}.png`);
-jest.mock('ico/pokeball.png', () => 'pokeball.png');
+vi.mock('lib/PokemonAssets', () => ({ default: id => `pokemon_${id}.png` }));
+vi.mock('ico/pokeball.png', () => ({ default: 'pokeball.png' }));
 
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
@@ -8,8 +8,8 @@ import PokemonCard from 'components/Pokemon';
 import Pokemon from 'lib/Pokemon';
 
 const makeCtx = (overrides = {}) => ({
-    selectPokemon: jest.fn(),
-    newRound: jest.fn(),
+    selectPokemon: vi.fn(),
+    newRound: vi.fn(),
     found_pokemons: [],
     incorrects: [],
     pair_has_been_selected: false,
