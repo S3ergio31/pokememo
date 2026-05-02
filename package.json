@@ -26,6 +26,9 @@
     "test:run": "vitest run",
     "typecheck": "tsc --noEmit"
   },
+  "engines": {
+    "node": ">=25.9.0"
+  },
   "browserslist": {
     "production": [
       ">0.2%",
