@@ -94,12 +94,12 @@ interface GameState {
 ## Development Commands
 
 ```bash
-yarn dev        # Start Vite dev server
-yarn build      # TypeScript check + production build
-yarn preview    # Preview production build locally
-yarn test       # Run Vitest in watch mode
-yarn test:run   # Run tests once (CI)
-yarn typecheck  # tsc --noEmit
+npm run dev        # Start Vite dev server
+npm run build      # TypeScript check + production build
+npm run preview    # Preview production build locally
+npm test           # Run Vitest in watch mode
+npm run test:run   # Run tests once (CI)
+npm run typecheck  # tsc --noEmit
 ```
 
 ## Testing Guidelines
