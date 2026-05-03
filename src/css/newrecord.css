@@ -1,0 +1,37 @@
+.newrecord-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.newrecord-label {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  text-align: center;
+  margin: 0;
+}
+
+.newrecord-input {
+  width: 100%;
+  max-width: 280px;
+  padding: 0.625rem 1rem;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.9375rem;
+  text-align: center;
+  outline: none;
+  transition: border-color 0.15s, background-color 0.15s;
+}
+
+.newrecord-input:focus {
+  border-color: var(--pokemon-red);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.newrecord-input::placeholder {
+  color: var(--text-muted);
+}

@@ -27,36 +27,34 @@ function renderCard(pokemon: Pokemon, ctx = makeCtx()) {
 describe('Pokemon (card component)', () => {
     const pokemon = new Pokemon(3);
 
-    it('shows the pokeball (face-down) before any interaction', () => {
-        renderCard(pokemon);
-        expect(screen.getByRole('img')).toHaveAttribute('src', 'pokeball.png');
+    it('renders face-down initially (no flipped class on card)', () => {
+        const { container } = renderCard(pokemon);
+        expect(container.querySelector('.pokemon-card')).not.toHaveClass('flipped');
     });
 
-    it('uses the pokemon name as the alt attribute', () => {
+    it('uses the pokemon name as the alt attribute on the back face', () => {
         renderCard(pokemon);
         expect(screen.getByAltText('pokemon_3')).toBeInTheDocument();
     });
 
-    it('reveals the pokemon image and applies the flip class on click', () => {
-        renderCard(pokemon);
-        fireEvent.click(screen.getByRole('img'));
-        const img = screen.getByRole('img');
-        expect(img).toHaveAttribute('src', 'pokemon_3.png');
-        expect(img).toHaveClass('flip');
+    it('applies the flipped class on click', () => {
+        const { container } = renderCard(pokemon);
+        fireEvent.click(container.querySelector('.pokemon-card')!);
+        expect(container.querySelector('.pokemon-card')).toHaveClass('flipped');
     });
 
     it('calls selectPokemon with the pokemon instance on click', () => {
         const ctx = makeCtx();
-        renderCard(pokemon, ctx);
-        fireEvent.click(screen.getByRole('img'));
+        const { container } = renderCard(pokemon, ctx);
+        fireEvent.click(container.querySelector('.pokemon-card')!);
         expect(ctx.selectPokemon).toHaveBeenCalledWith(pokemon);
     });
 
     it('does not flip when a pair is already being evaluated', () => {
         const ctx = makeCtx({ pair_has_been_selected: true });
-        renderCard(pokemon, ctx);
-        fireEvent.click(screen.getByRole('img'));
-        expect(screen.getByRole('img')).not.toHaveClass('flip');
+        const { container } = renderCard(pokemon, ctx);
+        fireEvent.click(container.querySelector('.pokemon-card')!);
+        expect(container.querySelector('.pokemon-card')).not.toHaveClass('flipped');
         expect(ctx.selectPokemon).not.toHaveBeenCalled();
     });
 });

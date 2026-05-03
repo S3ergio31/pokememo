@@ -1,11 +1,11 @@
 import { useContext, useEffect, useState } from 'react';
 import { GameContext } from 'context/GameProvider';
-import pokeball from 'ico/pokeball.png';
 import type Pokemon from 'lib/Pokemon';
 
 interface FlipResult {
-  flip: string;
-  image: string;
+  isFlipped: boolean;
+  isFound: boolean;
+  isIncorrect: boolean;
   handleFlip: () => void;
 }
 
@@ -47,8 +47,9 @@ const usePokemonFlip = (pokemon: Pokemon): FlipResult => {
   useEffect(hideIncorrect, [found, newRound, visible, pokemon, incorrects]);
 
   return {
-    flip: `pokemon ${visible ? 'flip' : ''}`,
-    image: visible || found ? pokemon.image : pokeball,
+    isFlipped: visible || found,
+    isFound: found,
+    isIncorrect: !found && visible && existPokemonIn(incorrects, pokemon),
     handleFlip,
   };
 };

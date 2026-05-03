@@ -8,10 +8,13 @@ import usePokemonFlip from 'hooks/usePokemonFlip';
 import Pokemon from 'lib/Pokemon';
 
 function FlipCard({ pokemon }: { pokemon: Pokemon }) {
-    const { flip, image, handleFlip } = usePokemonFlip(pokemon);
+    const { isFlipped, isFound, isIncorrect, handleFlip } = usePokemonFlip(pokemon);
+    const cls = ['card', isFlipped && 'flipped', isFound && 'found', isIncorrect && 'incorrect']
+        .filter(Boolean).join(' ');
+    const src = isFlipped ? pokemon.image : 'pokeball.png';
     return (
-        <div data-testid="card" className={flip} onClick={handleFlip}>
-            <img data-testid="img" src={image} alt="" />
+        <div data-testid="card" className={cls} onClick={handleFlip}>
+            <img data-testid="img" src={src} alt="" />
         </div>
     );
 }
@@ -42,9 +45,9 @@ describe('usePokemonFlip', () => {
             expect((getByTestId('img') as HTMLImageElement).src).toContain('pokeball.png');
         });
 
-        it('does not apply the flip CSS class initially', () => {
+        it('does not apply the flipped CSS class initially', () => {
             const { getByTestId } = renderCard(pokemon, makeContext());
-            expect(getByTestId('card').className).not.toContain('flip');
+            expect(getByTestId('card').className).not.toContain('flipped');
         });
     });
 
@@ -55,7 +58,7 @@ describe('usePokemonFlip', () => {
 
             fireEvent.click(getByTestId('card'));
 
-            expect(getByTestId('card').className).toContain('flip');
+            expect(getByTestId('card').className).toContain('flipped');
             expect((getByTestId('img') as HTMLImageElement).src).toContain('pokemon_1.png');
             expect(ctx.selectPokemon).toHaveBeenCalledWith(pokemon);
         });
@@ -66,7 +69,7 @@ describe('usePokemonFlip', () => {
 
             fireEvent.click(getByTestId('card'));
 
-            expect(getByTestId('card').className).not.toContain('flip');
+            expect(getByTestId('card').className).not.toContain('flipped');
             expect(ctx.selectPokemon).not.toHaveBeenCalled();
         });
 
@@ -125,7 +128,7 @@ describe('usePokemonFlip', () => {
             const { getByTestId, rerender } = renderCard(pokemon, ctx);
 
             fireEvent.click(getByTestId('card'));
-            expect(getByTestId('card').className).toContain('flip');
+            expect(getByTestId('card').className).toContain('flipped');
 
             rerender(
                 <GameContext.Provider value={{ ...ctx, incorrects: [pokemon] }}>
@@ -135,7 +138,7 @@ describe('usePokemonFlip', () => {
 
             act(() => { vi.advanceTimersByTime(600); });
 
-            expect(getByTestId('card').className).not.toContain('flip');
+            expect(getByTestId('card').className).not.toContain('flipped');
             expect((getByTestId('img') as HTMLImageElement).src).toContain('pokeball.png');
             expect(ctx.newRound).toHaveBeenCalled();
         });

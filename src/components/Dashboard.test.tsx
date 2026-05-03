@@ -29,6 +29,7 @@ describe('Dashboard', () => {
                 <Dashboard />
             </GameContext.Provider>
         );
+        // Each card has one accessible img (back face with alt text); front pokeball has alt=""
         expect(screen.getAllByRole('img')).toHaveLength(3);
     });
 
@@ -41,18 +42,18 @@ describe('Dashboard', () => {
         expect(screen.queryByRole('img')).not.toBeInTheDocument();
     });
 
-    it('each card starts face-down showing the pokeball', () => {
+    it('each card starts face-down (no flipped class)', () => {
         const pokemons = [
             { key: 0, value: new Pokemon(1) },
             { key: 1, value: new Pokemon(2) },
         ];
-        render(
+        const { container } = render(
             <GameContext.Provider value={makeCtx(pokemons)}>
                 <Dashboard />
             </GameContext.Provider>
         );
-        screen.getAllByRole('img').forEach(img =>
-            expect(img).toHaveAttribute('src', 'pokeball.png')
+        container.querySelectorAll('.pokemon-card').forEach(card =>
+            expect(card).not.toHaveClass('flipped')
         );
     });
 });

@@ -1,0 +1,45 @@
+.records-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.records-table th {
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.9px;
+  padding: 0.375rem 0.75rem 0.625rem;
+  text-align: center;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.records-table td {
+  padding: 0.625rem 0.75rem;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  color: var(--text-primary);
+}
+
+.records-table tr:last-child td {
+  border-bottom: none;
+}
+
+.records-table .pos-cell {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+  width: 40px;
+}
+
+.records-table .pos-gold   { color: #fbbf24; }
+.records-table .pos-silver { color: #94a3b8; }
+.records-table .pos-bronze { color: #cd7f32; }
+
+.records-empty {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  padding: 1rem 0;
+}

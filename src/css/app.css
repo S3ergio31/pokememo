@@ -1,16 +1,38 @@
-body{
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --pokemon-red: #CC0000;
+  --pokemon-red-hover: #a30000;
+  --bg-primary: #0d1b2a;
+  --bg-surface: #162435;
+  --bg-card-face: #1e3348;
+  --text-primary: #f1f5f9;
+  --text-muted: #94a3b8;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --success: #22c55e;
+  --warning: #eab308;
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+body {
   margin: 0;
   padding: 0;
-  background-color: #ccc;
-  height: 100vh;
+  background-color: var(--bg-primary);
+  min-height: 100vh;
+  font-family: 'Inter', system-ui, sans-serif;
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
 }
 
 #root {
   display: flex;
   flex-direction: column;
-  height: 100%;
-}
-
-:root {
-  --pokemon-red: #CC0000;
+  min-height: 100vh;
 }

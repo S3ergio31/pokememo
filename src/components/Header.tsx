@@ -8,8 +8,8 @@ function Header() {
   return (
     <header className='header'>
       <img src={logo} alt="logo" />
-      <div>
-        Round: {useContext(GameContext).round}
+      <div className="header-info">
+        <span className="header-round">Round {useContext(GameContext).round}</span>
         <Timer />
       </div>
     </header>

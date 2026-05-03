@@ -1,6 +1,7 @@
 import { useState, useContext, type ChangeEvent } from 'react';
 import { GameContext } from 'context/GameProvider';
 import Modal from './Modal';
+import 'css/newrecord.css';
 
 function NewRecord() {
   const { addRecord } = useContext(GameContext);
@@ -11,10 +12,12 @@ function NewRecord() {
 
   return (
     <Modal title="New record!" show={true} onAccept={handleAccept}>
-      <div style={{ textAlign: 'center' }}>
+      <div className="newrecord-form">
+        <p className="newrecord-label">You set a new record! Enter your name:</p>
         <input
+          className="newrecord-input"
           type="text"
-          placeholder='Enter your name'
+          placeholder="Enter your name"
           value={name}
           onChange={handleChange}
         />
